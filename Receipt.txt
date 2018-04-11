@@ -1,0 +1,4 @@
+Chleb 2
+Bułka 0.5
+Ciastko 2.5
+TOTAL: 5.0

@@ -10,6 +10,7 @@ public class JDBCDriver {
     private Connection connection = null;
     public static String ORDER="\n";
     public static BigDecimal TOTAL=new BigDecimal(0);
+    public static boolean productFound;
 
     public JDBCDriver() {
         try {
@@ -49,16 +50,24 @@ public class JDBCDriver {
                 Statement stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 
-            if (!rs.isBeforeFirst()) System.out.print("No such product");
-            while (rs.next()) {
-                product.setProductName(rs.getString("ProductName"));
-                product.setUnitPrice(new BigDecimal(rs.getString("UnitPrice")));
-                if(!product.equals(null))
-                {
-                    Product.productsList.add(product);
-                    Product.total = Product.total.add(new BigDecimal(rs.getString("UnitPrice")));
+            if (!rs.isBeforeFirst())
+            {
+                productFound=false;
+            }
+            else
+            {
+                productFound=true;
+                while (rs.next()) {
+                    product.setProductName(rs.getString("ProductName"));
+                    product.setUnitPrice(new BigDecimal(rs.getString("UnitPrice")));
+                    if(!product.equals(null))
+                    {
+                        com.robert.model.Order.productsList.add(product);
+                        com.robert.model.Order.totalPrice = com.robert.model.Order.totalPrice.add(new BigDecimal(rs.getString("UnitPrice")));
+                    }
                 }
             }
+
         } catch (SQLException s) {
             System.out.println("SQL Error: " + s.toString() + " " + s.getErrorCode() + " " + s.getSQLState());
         }

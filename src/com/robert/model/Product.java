@@ -1,7 +1,6 @@
 package com.robert.model;
 
 import java.math.BigDecimal;
-import java.util.LinkedList;
 
 public class Product {
     private String productName;
@@ -13,7 +12,8 @@ public class Product {
     }
 
     public Product() {
-
+        this.productName="";
+        this.unitPrice=new BigDecimal(0);
     }
 
     public void setProductName(String productName) {
@@ -37,38 +37,8 @@ public class Product {
         return productName;
     }
 
-    public static LinkedList<Product> getProductsList() {
-        return productsList;
-    }
-
-    public static BigDecimal getTotal() {
-        return total;
-    }
-
     public void printProduct()
     {
-        System.out.println(productName+" "+unitPrice);
+        System.out.println(productName+"\t"+unitPrice);
     }
-
-    public static void printProductsList()
-    {
-        for (Product x:productsList
-             ) {
-            x.printProduct();
-        }
-    }
-
-
-    public static String getProducts()
-    {
-        String products="";
-        for (Product x:productsList
-             ) {
-            products+=(x.getProduct()+System.getProperty("line.separator"));
-        }
-        return products;
-    }
-
- public static LinkedList<Product> productsList = new LinkedList<>();
-    public static BigDecimal total=new BigDecimal(0);
 }

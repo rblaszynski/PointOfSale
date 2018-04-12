@@ -6,19 +6,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import com.robert.model.Product.*;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.math.BigDecimal;
 
 public class Model {
-    JDBCDriver driver = new JDBCDriver();
-    private TableView<Product> productTableView = new TableView<>();
-    private ObservableList<Product> productObservableList;
-    private static int flag;
+    private final JDBCDriver driver = new JDBCDriver();
+    private final TableView<Product> productTableView = new TableView<>();
+    // --Commented out by Inspection (12.04.2018 22:09):private ObservableList<Product> productObservableList;
+    // --Commented out by Inspection (12.04.2018 22:09):private static int flag;
 
     public void checkValid(TextField input){
         String barcode = input.getText();
@@ -71,11 +68,9 @@ public class Model {
     }
 
     private ObservableList<Product> getProduct() {
-        ObservableList<Product> products = FXCollections.observableArrayList(com.robert.model.Order.getProductsList().getLast());
-        return products;
+        return FXCollections.observableArrayList(Order.getProductsList().getLast());
     }
     private ObservableList<Product> getProducts() {
-        ObservableList<Product> products = FXCollections.observableArrayList(com.robert.model.Order.getProductsList());
-        return products;
+        return FXCollections.observableArrayList(com.robert.model.Order.getProductsList());
     }
 }

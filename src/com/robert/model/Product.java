@@ -26,7 +26,7 @@ public class Product {
 
     public String getProduct()
     {
-        return productName + " " + unitPrice.toString();
+        return String.format("%-15.15s %10.2f", productName, unitPrice);
     }
 
     public BigDecimal getUnitPrice() {

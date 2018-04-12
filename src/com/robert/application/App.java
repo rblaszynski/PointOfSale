@@ -3,7 +3,7 @@ package com.robert.application;
 import com.robert.controller.Controller;
 import com.robert.model.Order;
 import com.robert.model.Product;
-import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -22,7 +22,7 @@ public class App extends javafx.application.Application {
     private final Controller controller = new Controller();
 
     private final Text totalText = new Text("Total: ");
-
+    private Stage window;
 
     private FlowPane addFlowPane()
     {
@@ -55,7 +55,6 @@ public class App extends javafx.application.Application {
         return layout;
     }
 
-    @SuppressWarnings("unchecked")
     private GridPane addGridPane()
     {
         GridPane gridPane = new GridPane();
@@ -66,7 +65,13 @@ public class App extends javafx.application.Application {
         totalText.setFont(Font.font("ARIAL",FontWeight.BOLD, 20));
 
         Button printButton = new Button("PRINT");
-        printButton.setOnAction(event -> controller.printOrder());
+        printButton.setOnAction(event -> {
+            controller.printOrder();
+            again();
+            totalText.setText("TOTAL: "+Order.totalPrice);
+            controller.updateTable();
+                }
+        );
 
 
         TableColumn<Product, String> nameColumn = new TableColumn<>("ProductName");
@@ -88,20 +93,60 @@ public class App extends javafx.application.Application {
 
         return gridPane;
     }
+
+    private void closeWindow(String msg)
+    {
+        if(AlertBox.display("Quit",msg))
+        {
+            Platform.exit();
+        }
+    }
+
+    private void again()
+    {
+        if(AlertBox.display("Print","Do you want to make new order?"))
+        {
+            controller.clearOrder();
+        }
+        else
+        {
+            try {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException ie)
+            {
+                System.out.println(ie);
+            }
+            closeWindow("Do you want to quit?");
+        }
+    }
+
     @Override
     public void start(Stage primaryStage) {
-        Stage window = new Stage();
+        window = new Stage();
         window.setTitle("LCD Display");
         window.setScene(new Scene(addGridPane()));
         window.show();
+        window.setResizable(false);
         window.setX(window.getX()+200);
+
+        window.setOnCloseRequest(event -> {
+            event.consume();
+            closeWindow("Are you sure you want to quit?");
+        });
 
 
         primaryStage.setTitle("Barcode scanner");
         primaryStage.setScene(new Scene(addFlowPane(),350,75));
         primaryStage.show();
+        primaryStage.setResizable(false);
         primaryStage.setX(window.getX()-375);
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume();
+            closeWindow("Are you sure you want to quit?");
+        });
 
     }
+
 }
 

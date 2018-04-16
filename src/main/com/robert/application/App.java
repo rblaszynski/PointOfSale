@@ -31,7 +31,7 @@ public class App extends javafx.application.Application {
         layout.setVgap(10);
         Label barcodeLabel = new Label("Enter barcode:");
         TextField barcodeInput = new TextField();
-        barcodeInput.setPromptText("12345");
+        barcodeInput.setPromptText("123");
 
         Button enterButton = new Button("ENTER");
 

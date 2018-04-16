@@ -1,6 +1,0 @@
-Item                  Price
-----                  -----
-Chleb                 2,00
-Bułka                 0,50
-                     -----
-Total:                2,50

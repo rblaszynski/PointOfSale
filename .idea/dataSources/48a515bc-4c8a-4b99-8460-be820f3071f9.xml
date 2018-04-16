@@ -28,7 +28,7 @@
     </column>
     <foreign-key id="13" parent="6" name="OrderID">
       <ColNames>OrderID</ColNames>
-      <RefTableName>Order</RefTableName>
+      <RefTableName>Orders</RefTableName>
       <RefColNames>OrderID</RefColNames>
     </foreign-key>
     <foreign-key id="14" parent="6" name="ProductID">

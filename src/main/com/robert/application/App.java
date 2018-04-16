@@ -39,14 +39,14 @@ public class App extends javafx.application.Application {
 
         enterButton.setOnAction(e -> {
             controller.check(barcodeInput);
-            totalText.setText("TOTAL: " + Order.totalPrice);
+            totalText.setText("TOTAL: " + controller.getTotalPrice());
             barcodeInput.clear();
         });
 
         barcodeInput.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.ENTER) {
                 controller.check(barcodeInput);
-                totalText.setText("TOTAL: " + Order.totalPrice);
+                totalText.setText("TOTAL: " + controller.getTotalPrice());
                 barcodeInput.clear();
             }
         });
@@ -65,7 +65,7 @@ public class App extends javafx.application.Application {
         printButton.setOnAction(event -> {
                     controller.printOrder();
                     again();
-                    totalText.setText("TOTAL: " + Order.totalPrice);
+                    totalText.setText("TOTAL: " + controller.getTotalPrice());
                     controller.updateTable();
                 }
         );

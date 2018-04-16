@@ -115,7 +115,7 @@ public class App extends javafx.application.Application {
         window.setScene(new Scene(addGridPane()));
         window.show();
         window.setResizable(false);
-        window.setX(window.getX() + 200);
+        window.setX(window.getX() + 300);
 
         window.setOnCloseRequest(event -> {
             event.consume();

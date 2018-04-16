@@ -1,4 +1,4 @@
-package com.robert.application;
+package main.com.robert.application;
 
 import javafx.stage.*;
 import javafx.scene.*;

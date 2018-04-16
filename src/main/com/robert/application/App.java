@@ -1,8 +1,8 @@
-package com.robert.application;
+package main.com.robert.application;
 
-import com.robert.controller.Controller;
-import com.robert.model.Order;
-import com.robert.model.Product;
+import main.com.robert.controller.Controller;
+import main.com.robert.model.Order;
+import main.com.robert.model.Product;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -24,8 +24,7 @@ public class App extends javafx.application.Application {
     private final Text totalText = new Text("Total: ");
     private Stage window;
 
-    private FlowPane addFlowPane()
-    {
+    private FlowPane addFlowPane() {
         FlowPane layout = new FlowPane();
         layout.setPadding(new Insets(20, 20, 20, 20));
         layout.setHgap(10);
@@ -40,39 +39,36 @@ public class App extends javafx.application.Application {
 
         enterButton.setOnAction(e -> {
             controller.check(barcodeInput);
-            totalText.setText("TOTAL: "+Order.totalPrice);
+            totalText.setText("TOTAL: " + Order.totalPrice);
             barcodeInput.clear();
-        } );
+        });
 
         barcodeInput.setOnKeyPressed(event -> {
-            if(event.getCode()==KeyCode.ENTER)
-            {
+            if (event.getCode() == KeyCode.ENTER) {
                 controller.check(barcodeInput);
-                totalText.setText("TOTAL: "+Order.totalPrice);
+                totalText.setText("TOTAL: " + Order.totalPrice);
                 barcodeInput.clear();
             }
         });
         return layout;
     }
 
-    private GridPane addGridPane()
-    {
+    private GridPane addGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.setHgap(10);
         gridPane.setVgap(10);
-        gridPane.setPadding(new Insets(10,10,10,10));
+        gridPane.setPadding(new Insets(10, 10, 10, 10));
 
-        totalText.setFont(Font.font("ARIAL",FontWeight.BOLD, 20));
+        totalText.setFont(Font.font("ARIAL", FontWeight.BOLD, 20));
 
         Button printButton = new Button("PRINT");
         printButton.setOnAction(event -> {
-            controller.printOrder();
-            again();
-            totalText.setText("TOTAL: "+Order.totalPrice);
-            controller.updateTable();
+                    controller.printOrder();
+                    again();
+                    totalText.setText("TOTAL: " + Order.totalPrice);
+                    controller.updateTable();
                 }
         );
-
 
         TableColumn<Product, String> nameColumn = new TableColumn<>("ProductName");
         nameColumn.setMinWidth(200);
@@ -82,40 +78,31 @@ public class App extends javafx.application.Application {
         priceColumn.setMinWidth(100);
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
 
-
         controller.getTableView().getColumns().addAll(nameColumn, priceColumn);
 
-        gridPane.add(controller.getTableView(),0,0);
-        gridPane.add(printButton,0,1);
-        gridPane.add(totalText,0,1);
-        GridPane.setHalignment(printButton,HPos.RIGHT);
+        gridPane.add(controller.getTableView(), 0, 0);
+        gridPane.add(printButton, 0, 1);
+        gridPane.add(totalText, 0, 1);
+        GridPane.setHalignment(printButton, HPos.RIGHT);
 
 
         return gridPane;
     }
 
-    private void closeWindow(String msg)
-    {
-        if(AlertBox.display("Quit",msg))
-        {
+    private void closeWindow(String msg) {
+        if (AlertBox.display("Quit", msg)) {
             Platform.exit();
         }
     }
 
-    private void again()
-    {
-        if(AlertBox.display("Print","Do you want to make new order?"))
-        {
+    private void again() {
+        if (AlertBox.display("Print", "Do you want to make new order?")) {
             controller.clearOrder();
-        }
-        else
-        {
+        } else {
             try {
                 Thread.sleep(500);
-            }
-            catch (InterruptedException ie)
-            {
-                System.out.println(ie);
+            } catch (InterruptedException ie) {
+                System.err.println(ie.toString());
             }
             closeWindow("Do you want to quit?");
         }
@@ -128,19 +115,18 @@ public class App extends javafx.application.Application {
         window.setScene(new Scene(addGridPane()));
         window.show();
         window.setResizable(false);
-        window.setX(window.getX()+200);
+        window.setX(window.getX() + 200);
 
         window.setOnCloseRequest(event -> {
             event.consume();
             closeWindow("Are you sure you want to quit?");
         });
 
-
         primaryStage.setTitle("Barcode scanner");
-        primaryStage.setScene(new Scene(addFlowPane(),350,75));
+        primaryStage.setScene(new Scene(addFlowPane(), 350, 75));
         primaryStage.show();
         primaryStage.setResizable(false);
-        primaryStage.setX(window.getX()-375);
+        primaryStage.setX(window.getX() - 375);
         primaryStage.setOnCloseRequest(event -> {
             event.consume();
             closeWindow("Are you sure you want to quit?");

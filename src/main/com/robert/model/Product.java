@@ -1,6 +1,7 @@
-package com.robert.model;
+package main.com.robert.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Product {
     private String productName;
@@ -8,12 +9,13 @@ public class Product {
 
     public Product(String productName, BigDecimal unitPrice) {
         this.productName = productName;
-        this.unitPrice = unitPrice;
+        this.unitPrice = unitPrice.setScale(2, RoundingMode.HALF_EVEN);
     }
 
     public Product() {
-        this.productName="";
-        this.unitPrice=new BigDecimal(0);
+        this.productName = "";
+        this.unitPrice = new BigDecimal(0).setScale(2, RoundingMode.HALF_EVEN);
+
     }
 
     public void setProductName(String productName) {
@@ -24,8 +26,7 @@ public class Product {
         this.unitPrice = unitPrice;
     }
 
-    public String getProduct()
-    {
+    public String getFormattedProduct() {
         return String.format("%-15.15s %10.2f", productName, unitPrice);
     }
 
@@ -37,8 +38,4 @@ public class Product {
         return productName;
     }
 
-    public void printProduct()
-    {
-        System.out.println(productName+"\t"+unitPrice);
-    }
 }
